@@ -38,7 +38,6 @@ function App() {
             
             {/* Common Routes */}
             <Route path="tickets" element={<Tickets />} />
-            <Route path="invoices" element={<Invoices />} />
             <Route path="settings" element={<Settings />} />
 
             {/* Employee/Admin Only Routes */}
@@ -56,6 +55,7 @@ function App() {
             {/* Admin Only Routes */}
             <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
               <Route path="users" element={<Users />} />
+              <Route path="invoices" element={<Invoices />} />
             </Route>
           </Route>
         </Route>

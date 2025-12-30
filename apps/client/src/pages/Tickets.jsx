@@ -42,7 +42,8 @@ const Tickets = () => {
             
             let allTickets = ticketRes.data.data || [];
             
-            // Filter for Employees: Only show their assigned tickets
+            // Filter: Only show assigned tickets for Employees
+            // Admins see EVERYTHING
             if (user?.role === 'Employee') {
                 allTickets = allTickets.filter(t => {
                     const assignedId = typeof t.assignedTo === 'object' ? t.assignedTo?._id : t.assignedTo;
