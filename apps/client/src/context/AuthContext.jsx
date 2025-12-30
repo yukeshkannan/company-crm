@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -13,8 +15,9 @@ export const AuthProvider = ({ children }) => {
   /* Auto Check-in Logic - Only for Employees/Staff */
   const autoCheckIn = async (parsedUser) => {
     if (parsedUser.role === 'Client') return; // Clients don't have attendance
+    if (parsedUser.role === 'Client') return; // Clients don't have attendance
     try {
-        const res = await fetch('/api/attendance/check-in', {
+        const res = await fetch(`${API_URL}/api/attendance/check-in`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId: parsedUser.id || parsedUser._id }),
@@ -30,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const autoCheckOut = async (currUser) => {
     if (currUser.role === 'Client') return; // Clients don't have attendance
     try {
-        await fetch('/api/attendance/check-out', {
+        await fetch(`${API_URL}/api/attendance/check-out`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId: currUser.id || currUser._id }),
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
