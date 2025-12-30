@@ -2,8 +2,9 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const rawApiUrl = import.meta.env.VITE_API_URL;
-// If rawApiUrl is exactly '/', we use empty string so that fetch('/api...') works as relative path
-const API_URL = (rawApiUrl === '/') ? '' : (rawApiUrl || '');
+// Bulletproof fix: If we are on Vercel, force relative path (empty string)
+const isVercel = window.location.hostname.includes('vercel.app');
+const API_URL = isVercel ? '' : (rawApiUrl || '');
 
 const AuthContext = createContext();
 
